@@ -18,7 +18,7 @@ add-to-compose name:
     sed -i '$ a \      MYSQL_USER: user' {{compose}}
     sed -i '$ a \      MYSQL_PASSWORD: password' {{compose}}
     sed -i '$ a \    ports:\n     - 3301:3306\n' {{compose}}
-    sed -i '0,/depends_on:/s//depends_on:\n     - {{name}}/' {{compose}}
+    sed -i '0,/depends_on:/s//depends_on:\n     - {{name}}\n/' {{compose}}
     echo done
 
 generate-dockerfile service_path:
