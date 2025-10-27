@@ -4,6 +4,12 @@ import 'file_gen/docker.just'
 
 add-service name: (_add-to-proxy snakecase(name)) (add-to-compose snakecase(name)) (generate-service-files name) (generate-dockerfile name)
 
+doctor:
+    echo "Checking 'sed' and 'bash' versions..."
+    sed_version=$(sed --version) && echo $sed_version
+    bash_version=$(bash --version) && echo $bash_version
+    echo "All good"
+
 tabs := "\t\t\t"
 matchDef := '\n\t\t\t\t"Match": { "Path": '
 
