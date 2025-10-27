@@ -42,7 +42,7 @@ _generate-cs-model service:
     # Create default Program.cs
     echo "var builder = WebApplication.CreateBuilder(args);" >> {{service}}/Program.cs
     sed -i "$ a builder.Services.AddControllers();\nbuilder.Services.AddEndpointsApiExplorer();\nbuilder.Services.AddSwaggerGen();\n\n" {{service}}/Program.cs
-    sed -i "$ a builder.Services.AddDbContext<${ctx_name}>(opt => \n\topt.UseMySql(\n\t\tbuilder.Configuration.GetConnectionString(\"DefaultConnection\"),\n\t\tServerVersion.AutoDetect(builder.Configuration.GetConnectionString(\"DefaultConnection\")))\n" {{service}}/Program.cs
+    sed -i "$ a builder.Services.AddDbContext<${ctx_name}>(opt => \n\topt.UseMySql(\n\t\tbuilder.Configuration.GetConnectionString(\"DefaultConnection\"),\n\t\tServerVersion.AutoDetect(builder.Configuration.GetConnectionString(\"DefaultConnection\"))));\n" {{service}}/Program.cs
     sed -i "$ a var app = builder.Build();\n" {{service}}/Program.cs
     sed -i "$ a if (app.Environment.IsDevelopment())\n{\n\tapp.UseSwagger();\n\tapp.UseSwaggerUI();\n}\n\napp.MapControllers();\n" {{service}}/Program.cs
     sed -i "$ a using (var scope = app.Services.CreateScope())\n{\n\tvar db = scope.ServiceProvider.GetRequiredService<${ctx_name}>();\n\tdb.Database.Migrate();\n}\n" {{service}}/Program.cs
