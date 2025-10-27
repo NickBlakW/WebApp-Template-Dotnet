@@ -34,7 +34,8 @@ _generate-cs-model service:
     ctrl=$ctrl_path/"${model_name}Controller.cs"
     ctrl_name="${model_name}Controller"
     mkdir $ctrl_path
-    echo "using Microsoft.AspNetCore.Mvc;" >> $ctrl
+    echo "using System.Threading.Tasks;" >> $ctrl
+    sed -i "$ a using Microsoft.AspNetCore.Mvc;" $ctrl
     sed -i "$ a using Microsoft.EntityFrameworkCore;\n\n[ApiController]\n[Route(\"[controller]\")]\npublic class ${ctrl_name} : ControllerBase\n{" $ctrl
     sed -i "$ a \ \tprivate readonly ${ctx_name} _context;\n\n\tpublic ${ctrl_name}(${ctx_name} ctx) {\n\t_context = ctx;\n\t}\n" $ctrl
     sed -i "$ a \ \t[HttpGet]\n\tpublic async Task<IActionResult> Get()\n\t{\n\t\tvar resultList = await _context.${model_name}s.ToListAsync();\n\t\treturn Ok(resultList);\n\t}\n" $ctrl
