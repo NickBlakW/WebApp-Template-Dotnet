@@ -1,0 +1,8 @@
+services:
+  proxy:
+    build: ./Proxy
+    ports:
+     - 8000:80
+    volumes:
+     - ./Proxy/wwwroot:/app/wwwroot
+    depends_on:
